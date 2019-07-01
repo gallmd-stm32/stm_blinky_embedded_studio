@@ -5,10 +5,6 @@
 #include "stm32f4xx.h"
 
 
-//class I2CMaster;'
-//class interruptable;
-
-
 
 enum interrupts
 {
