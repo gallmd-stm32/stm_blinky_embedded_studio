@@ -1,55 +1,27 @@
 #include "interrupts.h"
 
+//array of pointers to objects that system interrupt functions will call
+interruptable * handlerPointers[sizeof(interrupts)];
 
 
-
-
-
-/* Null, because instance will be initialized on demand. */
-interrupts_class* interrupts_class::instance = 0;
-
-interrupts_class* interrupts_class::getInstance()
-{
-
-  if(instance == 0)
-  {
-    instance = new interrupts_class();
-    global = instance;
-  }
-
-  return instance;
-
- 
- }
-
- interrupts_class::interrupts_class(){}
-
- interruptable * handlerPointers[sizeof(interrupts)];
-
+//system interrupt calls
 extern "C"{
 
 
 
   void I2C1_EV_IRQHandler(void){
 
-  handlerPointers[I2C1_EV_IDX]->handleInterrupts(1);
+    handlerPointers[I2C1_EV_IDX]->handleInterrupts(0);
   
   }
 
   void I2C1_ER_IRQHandler(void)
   {
     
-//     interrupts_class::handlerPointers[I2C1_ER_IDX];
+
+    handlerPointers[I2C1_EV_IDX]->handleInterrupts(1);
 
   }
 
 }
 
-//int interrupts::registerInterrupt(interruptable *interruptablePtr)
-//{
-//
-//  interrupts::interruptableClasses[Dummy_I2C1_EV_enum] = interruptablePtr;
-//
-//
-//  return 1;
-//}

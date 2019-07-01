@@ -49,7 +49,7 @@ I2CMaster::I2CMaster(I2C::BaseRegisterType baseRegister)
 		statusRegister2 = baseRegister + I2C::StatusRegister2::RegisterOffset;
 		triseRegister = baseRegister + I2C::TRiseRegiser::RegisterOffset;
 
-                interruptsClass = interrupts_class::getInstance();
+
 
 		I2CMaster::init();
 
