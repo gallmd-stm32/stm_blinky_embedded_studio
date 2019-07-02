@@ -6,6 +6,7 @@
 "Output/stm_blinky_embedded_studio Debug/Obj/interruptable.o"
 "Output/stm_blinky_embedded_studio Debug/Obj/i2c.o"
 "Output/stm_blinky_embedded_studio Debug/Obj/interrupt_test.o"
+"Output/stm_blinky_embedded_studio Debug/Obj/misc.o"
 "Output/stm_blinky_embedded_studio Debug/Obj/thumb_crt0.o"
 "Output/stm_blinky_embedded_studio Debug/Obj/STM32F4xx_Startup.o"
 "Output/stm_blinky_embedded_studio Debug/Obj/STM32F40x_Vectors.o"

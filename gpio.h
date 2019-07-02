@@ -152,6 +152,14 @@ public:
                   rcc::BaseRegisters::RccBaseRegister+rcc::RccAHB1EnableRegister::RegisterOffset, 
                   rcc::RccAHB1EnableRegister::GpioA>::reg_or();
                 }   
+
+                               //Enable RCC_AHB1 Clock
+                if(gpio_bank == GPIOxBaseRegisters::GPIO_B){
+                  reg_access<rcc::RccAHB1EnableRegisterType, 
+                  rcc::RccAHB1EnableRegisterType, 
+                  rcc::BaseRegisters::RccBaseRegister+rcc::RccAHB1EnableRegister::RegisterOffset, 
+                  rcc::RccAHB1EnableRegister::GpioB>::reg_or();
+                }   
                 if(gpio_bank == GPIOxBaseRegisters::GPIO_G){
                   reg_access<rcc::RccAHB1EnableRegisterType, 
                   rcc::RccAHB1EnableRegisterType, 
@@ -165,7 +173,7 @@ public:
 
 //		dynamic_access<GPIOxRegisterType, uint32_t>::reg_or(GPIOxModeRegister, tempMask);
 
-                dynamic_access<GPIOxRegisterType, uint32_t>::reg_or(0x40021800, tempMask);
+                dynamic_access<GPIOxRegisterType, uint32_t>::reg_or(GPIOxModeRegister, tempMask);
                 
 
 		//set ouput type register

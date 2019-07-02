@@ -16,4 +16,5 @@ Output/stm_blinky_embedded_studio\ Debug/Obj/i2c.o: \
  /home/matt/Development/code/st/embedded\ studio/stm_blinky_embedded_studio/CMSIS_4/CMSIS/Include/core_cmSimd.h \
  /home/matt/Development/code/st/embedded\ studio/stm_blinky_embedded_studio/STM32F4xx/CMSIS/Device/Include/system_stm32f4xx.h \
  /home/matt/Development/code/st/embedded\ studio/stm_blinky_embedded_studio/interrupts.h \
- /home/matt/Development/code/st/embedded\ studio/stm_blinky_embedded_studio/interruptable.h
+ /home/matt/Development/code/st/embedded\ studio/stm_blinky_embedded_studio/interruptable.h \
+ /home/matt/Development/code/st/embedded\ studio/stm_blinky_embedded_studio/misc.h

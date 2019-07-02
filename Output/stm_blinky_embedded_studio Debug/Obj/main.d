@@ -16,4 +16,5 @@ Output/stm_blinky_embedded_studio\ Debug/Obj/main.o: \
  /home/matt/Development/code/st/embedded\ studio/stm_blinky_embedded_studio/rcc.h \
  /home/matt/Development/code/st/embedded\ studio/stm_blinky_embedded_studio/interrupts.h \
  /home/matt/Development/code/st/embedded\ studio/stm_blinky_embedded_studio/interruptable.h \
- /home/matt/Development/code/st/embedded\ studio/stm_blinky_embedded_studio/i2c.h
+ /home/matt/Development/code/st/embedded\ studio/stm_blinky_embedded_studio/i2c.h \
+ /home/matt/Development/code/st/embedded\ studio/stm_blinky_embedded_studio/misc.h

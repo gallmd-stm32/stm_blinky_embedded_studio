@@ -16,9 +16,12 @@
 #include "rcc.h"
 #include "interrupts.h"
 #include "interruptable.h"
+#include "misc.h"
 
 
 class interrupts_class;
+
+
 namespace I2C
 {
 
@@ -890,14 +893,14 @@ class I2CMaster : public interruptable{
 
 public:
     I2CMaster(I2C::BaseRegisterType baseRegister);
-    int sendBytes(I2C::send_buffer_type sendBuffer, uint8_t address);
+    int sendBytes(uint8_t * sendBuffer, uint8_t address);
 
 //    static I2CMaster* handlers[1];
 
     void handleInterrupts(int interruptType);
     void EV_handler();
     void ER_handler();
-    void init();
+    
 
 
 private:
@@ -913,7 +916,7 @@ private:
 	I2C::BaseRegisterType statusRegister2;
 	I2C::BaseRegisterType triseRegister;
 
-	I2C::send_buffer_type send_buf;
+	uint8_t * send_buf;
 	uint8_t bytesSent;
 	uint8_t slaveAddress;
 	bool dataSent;
