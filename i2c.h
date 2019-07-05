@@ -19,7 +19,7 @@
 #include "misc.h"
 
 
-class interrupts_class;
+//class interrupts_class;
 
 
 namespace I2C
@@ -888,7 +888,7 @@ namespace I2C
 
 }
 
- extern interruptable * handlerPointers[sizeof(interrupts)];
+extern interruptable * handlerPointers[sizeof(peripheralInterrupts)];
 class I2CMaster : public interruptable{
 
 public:
@@ -921,7 +921,7 @@ private:
 	uint8_t slaveAddress;
 	bool dataSent;
         void registerInterrupts();
-        interrupts_class* interruptsClass;
+//        interrupts_class* interruptsClass;
 
 
 };

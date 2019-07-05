@@ -147,25 +147,54 @@ public:
 
                 //Enable RCC_AHB1 Clock
                 if(gpio_bank == GPIOxBaseRegisters::GPIO_A){
-                  reg_access<rcc::RccAHB1EnableRegisterType, 
-                  rcc::RccAHB1EnableRegisterType, 
-                  rcc::BaseRegisters::RccBaseRegister+rcc::RccAHB1EnableRegister::RegisterOffset, 
-                  rcc::RccAHB1EnableRegister::GpioA>::reg_or();
+              
+                  bankEnable = rcc::RccAHB1EnableRegister::GpioA;
                 }   
 
-                               //Enable RCC_AHB1 Clock
                 if(gpio_bank == GPIOxBaseRegisters::GPIO_B){
-                  reg_access<rcc::RccAHB1EnableRegisterType, 
-                  rcc::RccAHB1EnableRegisterType, 
-                  rcc::BaseRegisters::RccBaseRegister+rcc::RccAHB1EnableRegister::RegisterOffset, 
-                  rcc::RccAHB1EnableRegister::GpioB>::reg_or();
+          
+                  bankEnable = rcc::RccAHB1EnableRegister::GpioB;
+
                 }   
-                if(gpio_bank == GPIOxBaseRegisters::GPIO_G){
-                  reg_access<rcc::RccAHB1EnableRegisterType, 
-                  rcc::RccAHB1EnableRegisterType, 
-                  rcc::BaseRegisters::RccBaseRegister+rcc::RccAHB1EnableRegister::RegisterOffset, 
-                  rcc::RccAHB1EnableRegister::GpioG>::reg_or();
+
+                if(gpio_bank == GPIOxBaseRegisters::GPIO_C){
+         
+                  bankEnable = rcc::RccAHB1EnableRegister::GpioC;
+
                 } 
+                if(gpio_bank == GPIOxBaseRegisters::GPIO_D){
+                
+                  bankEnable = rcc::RccAHB1EnableRegister::GpioD;
+
+                }              
+                if(gpio_bank == GPIOxBaseRegisters::GPIO_E){
+                  
+                  bankEnable = rcc::RccAHB1EnableRegister::GpioE;
+          
+                }  
+                if(gpio_bank == GPIOxBaseRegisters::GPIO_F){
+             
+                  bankEnable = rcc::RccAHB1EnableRegister::GpioF;
+
+                }                                           
+                if(gpio_bank == GPIOxBaseRegisters::GPIO_G){
+               
+                  bankEnable = rcc::RccAHB1EnableRegister::GpioG;
+
+                } 
+                if(gpio_bank == GPIOxBaseRegisters::GPIO_H){
+
+                  bankEnable = rcc::RccAHB1EnableRegister::GpioH;
+                }
+                if(gpio_bank == GPIOxBaseRegisters::GPIO_I){
+
+                  bankEnable = rcc::RccAHB1EnableRegister::GpioI;
+
+                }    
+                  dynamic_access<rcc::RCCRegisterType, 
+                  rcc::RCCRegisterType>::reg_or( 
+                  rcc::BaseRegisters::RccBaseRegister+rcc::RccAHB1EnableRegister::RegisterOffset, 
+                  bankEnable);
 
 		//set mode register
 		uint32_t tempMask = 0x00U;
@@ -237,6 +266,7 @@ private:
 	static constexpr GPIOxRegisterType GPIOxAlternateFunctionHighRegister = gpio_bank + RegisterOffsets::AlternateFunctionHighRegisterOffset;
 	static constexpr GPIOxRegisterType GPIOxAlternateFunctionLowRegister = gpio_bank + RegisterOffsets::AlternateFunctionLowRegisterOffset;
 	static constexpr GPIOxRegisterType bitPosition = (1UL << (pinNumber -1));
+        rcc::RCCRegisterType bankEnable;
 
 
 

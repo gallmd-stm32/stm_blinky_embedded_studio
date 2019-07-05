@@ -14,8 +14,8 @@ I2CMaster::I2CMaster(I2C::BaseRegisterType baseRegister)
 {
 
   //Program the peripheral input clock in the I2C_CR2 register in order to generate the correct timings
-  reg_access<rcc::RccAPB1EnableRegisterType, 
-              rcc::RccAPB1EnableRegisterType, 
+  reg_access<rcc::RCCRegisterType, 
+              rcc::RCCRegisterType, 
               rcc::BaseRegisters::RccBaseRegister+rcc::RccAPB1EnableRegister::RegisterOffset, 
               rcc::RccAPB1EnableRegister::I2C1Enable>::reg_or();
 
@@ -133,7 +133,7 @@ void I2CMaster::EV_handler()
 
 		 //send address
 		 //0x40005410
-		 dynamic_access<I2C::BaseRegisterType, uint16_t>::reg_set(dataRegister, 0xE0);
+		 dynamic_access<I2C::BaseRegisterType, uint8_t>::reg_set(dataRegister, 0xE0U);
 
 	 }
         
@@ -184,7 +184,7 @@ void I2CMaster::ER_handler()
 void I2CMaster::registerInterrupts()
 {
 
-  handlerPointers[I2C1_EV_IDX] = this;
+  handlerPointers[I2C1_IDX] = this;
    
 
 

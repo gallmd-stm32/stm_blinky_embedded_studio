@@ -6,14 +6,27 @@
 
 
 
-enum interrupts
+enum peripheralInterrupts
 {
-  I2C1_EV_IDX,
-  I2C1_ER_IDX,
-  I2C2_EV_IDX,
-  I2C2_ER_IDX,
-  I2C3_EV_IDX,
-  I2C3_ER_IDX
+  I2C1_IDX,
+  I2C2_IDX,
+  I2C3_IDX,
+  USART1_IDX,
+  USART2_IDX,
+  USART3_IDX,
+  USART4_IDX,
+  USART5_IDX,
+  USART6_IDX,
+  USART7_IDX,
+  USART8_IDX
+
+ };
+
+ enum interruptSource
+ {
+
+  I2C_EV,
+  I2C_ER
 
  };
 
