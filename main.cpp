@@ -4,6 +4,7 @@
 #include "i2c.h"
 #include "usart.h"
 #include "gpio_config.h"
+#include "display.h"
 
 
 
@@ -44,6 +45,7 @@ int main(void)
   i2c.sendBytes(brightness, displayAddress);
   Delay(0xFFFFF);
   i2c.sendBytes(allOn, displayAddress);
+//  i2c.sendBytes(display::characters::allCharacters[1][0]);
 
 
 
@@ -51,7 +53,8 @@ int main(void)
   
      Delay(0xFFFFF);
      greenLED.toggle();
-     myUsart1.sendBytes('t');
+     
+//     myUsart1.sendBytes('t');
     
   }
   

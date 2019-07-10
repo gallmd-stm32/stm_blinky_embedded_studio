@@ -44,7 +44,9 @@ namespace USART{
   {
 
     constexpr USARTRegisterType RegisterOffset = 0x00U;
-    constexpr USARTRegisterType RegisterReset = 0x000000C0U;
+    constexpr USARTRegisterType RegisterReset = 0x00000000U;
+//    constexpr USARTRegisterType RegisterReset = 0x000000C0U;
+
 
     constexpr USARTRegisterType ClearToSendFlag = stm32fxx::bits::BIT9;
     constexpr USARTRegisterType LineBreakDetection = stm32fxx::bits::BIT8;
@@ -195,13 +197,15 @@ namespace USART{
     USART::USARTRegisterType controlRegister3;
     USART::USARTRegisterType guardTimePrescalerRegister;
 
+    uint32_t usartStatus;
+
     PinType TXPin;
     PinType RXPin;
     GPIOxRegisterType TXGPIOBank;
     GPIOxRegisterType RXGPIOBank;
     AlternateFunctionType pinAF;
 
-    void registerInterrupts();
+    void registerInterrupt();
     int init();
 
 

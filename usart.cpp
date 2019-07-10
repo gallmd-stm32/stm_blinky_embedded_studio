@@ -1,9 +1,5 @@
 #include "usart.h"
 
-
-
-
-
 USART::Usart::Usart(USART::USARTRegisterType baseRegister)
 {
 
@@ -13,11 +9,12 @@ USART::Usart::Usart(USART::USARTRegisterType baseRegister)
   USART::Usart::controlRegister2 = baseRegister + USART::ControlRegister2::RegisterOffset;
   USART::Usart::controlRegister3 = baseRegister + USART::ControlRegister3::RegisterOffset;
   USART::Usart::baudRateRegister = baseRegister + USART::BaudRateRegister::RegisterOffset;
+  USART::Usart::statusRegister = baseRegister + USART::StatusRegister::RegisterOffset;
   USART::Usart::dataRegister = baseRegister + USART::DataRegister::RegisterOffset;
   Usart::Usart::guardTimePrescalerRegister = baseRegister + USART::GuardTimePrescalerRegister::RegisterOffset;
 
   USART::Usart::init();
-  USART::Usart::registerInterrupts();
+  USART::Usart::registerInterrupt();
 
 
 }
@@ -101,6 +98,8 @@ int USART::Usart::init()
                         PullUpPullDown::NoPullUpPullDown,
                         USART::Usart::pinAF);
 
+  //Enable Peripheral
+  dynamic_access<USART::USARTRegisterType, USART::USARTRegisterType>::reg_or(USART::Usart::controlRegister1, USART::ControlRegister1::UsartEnable);
 
   dynamic_access<USART::USARTRegisterType, USART::USARTRegisterType>::reg_or(USART::Usart::controlRegister1, USART::ControlRegister1::TransmitterEnable);
   dynamic_access<USART::USARTRegisterType, USART::USARTRegisterType>::reg_or(USART::Usart::controlRegister1, USART::ControlRegister1::ReceiverEnable);
@@ -124,8 +123,9 @@ int USART::Usart::init()
       //USART_BRR = 0x138 
   //configure baud rate
   dynamic_access<USART::USARTRegisterType, USART::USARTRegisterType>::reg_or(USART::Usart::baudRateRegister, 0x683);
-  //Enable Peripheral
-  dynamic_access<USART::USARTRegisterType, USART::USARTRegisterType>::reg_or(USART::Usart::controlRegister1, USART::ControlRegister1::UsartEnable);
+
+
+
 
   //enable interrupts in NVIC
   NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);               
@@ -137,12 +137,15 @@ int USART::Usart::init()
   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
   NVIC_Init(&NVIC_InitStructure);
 
+    //reset status register
+  dynamic_access<USART::USARTRegisterType, USART::USARTRegisterType>::reg_set(USART::Usart::statusRegister, USART::StatusRegister::RegisterReset);
+
 
 
 return 0;
 }
 
-void USART::Usart::registerInterrupts()
+void USART::Usart::registerInterrupt()
 {
 
     handlerPointers[USART1_IDX] = this;
@@ -154,6 +157,20 @@ void USART::Usart::registerInterrupts()
 void USART::Usart::handleInterrupts(int interruptType)
 {
 
+  USART::Usart::usartStatus = dynamic_access<USART::USARTRegisterType, USART::USARTRegisterType>::reg_get(statusRegister);
+  if(usartStatus && USART::StatusRegister::RXNotEmpty){
+
+    //echo what we got
+    uint8_t data;
+    data = dynamic_access<USART::USARTRegisterType, uint8_t>::reg_get(dataRegister);
+    dynamic_access<USART::USARTRegisterType, uint8_t>::reg_or(dataRegister, data);
+
+  }
+//  if(usartStatus & USART::StatusRegister::TXEmpty){
+//    
+//    dynamic_access<USART::USARTRegisterType, uint8_t>::reg_or(dataRegister, 't');
+//
+//   }
 
 }
 

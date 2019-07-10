@@ -920,7 +920,7 @@ private:
 	uint8_t bytesSent;
 	uint8_t slaveAddress;
 	bool dataSent;
-        void registerInterrupts();
+        void registerInterrupt();
 //        interrupts_class* interruptsClass;
 
 

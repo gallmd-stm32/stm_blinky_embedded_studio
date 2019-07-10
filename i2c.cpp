@@ -70,7 +70,7 @@ I2CMaster::I2CMaster(I2C::BaseRegisterType baseRegister)
   NVIC_InitStructure2.NVIC_IRQChannelCmd = ENABLE;
   NVIC_Init(&NVIC_InitStructure2);
 
-  I2CMaster::registerInterrupts();
+  I2CMaster::registerInterrupt();
 
 
   dynamic_access<I2C::BaseRegisterType, I2C::ControlRegister1Type>::reg_not(controlRegister1,
@@ -181,7 +181,7 @@ void I2CMaster::ER_handler()
 
 }
 
-void I2CMaster::registerInterrupts()
+void I2CMaster::registerInterrupt()
 {
 
   handlerPointers[I2C1_IDX] = this;

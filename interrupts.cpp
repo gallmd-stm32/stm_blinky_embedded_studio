@@ -30,6 +30,14 @@ extern "C"{
 
   }
 
+  void USART2_IRQHandler(void)
+  {
+
+    handlerPointers[USART2_IDX]->handleInterrupts(0);
+
+  }
+
+
 
 }
 

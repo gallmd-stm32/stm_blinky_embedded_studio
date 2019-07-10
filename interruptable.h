@@ -14,6 +14,7 @@ interruptable();
 
 
 virtual void handleInterrupts(int interruptType) = 0;
+virtual void registerInterrupt() = 0;
 
 private:
   
