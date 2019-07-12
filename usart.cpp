@@ -1,6 +1,6 @@
 #include "usart.h"
 
-USART::Usart::Usart(USART::USARTRegisterType baseRegister)
+USART::Usart::Usart(USART::USARTRegisterType baseRegister, util::circular_buffer<uint8_t> * TxBufferPointer)
 {
 
 
@@ -12,6 +12,8 @@ USART::Usart::Usart(USART::USARTRegisterType baseRegister)
   USART::Usart::statusRegister = baseRegister + USART::StatusRegister::RegisterOffset;
   USART::Usart::dataRegister = baseRegister + USART::DataRegister::RegisterOffset;
   Usart::Usart::guardTimePrescalerRegister = baseRegister + USART::GuardTimePrescalerRegister::RegisterOffset;
+  Usart::Usart::txBufPtr = TxBufferPointer;
+  hasData = false;
 
   USART::Usart::init();
   USART::Usart::registerInterrupt();
@@ -110,17 +112,17 @@ int USART::Usart::init()
   
 
 
-      //Value from reference manual
-      //104.1875
-      //example from https://sites.google.com/site/johnkneenmicrocontrollers/sci_rs232/fci_f107?tmpl=%2Fsystem%2Fapp%2Ftemplates%2Fprint%2F&showPrintDialog=1#linkbaud
-      // For the STM32F107 using USART2 with a clock frequency of 36MHz (Max) to obtain a baud rate of 115.2k need:
+  //Value from reference manual
+  //104.1875
+  //example from https://sites.google.com/site/johnkneenmicrocontrollers/sci_rs232/fci_f107?tmpl=%2Fsystem%2Fapp%2Ftemplates%2Fprint%2F&showPrintDialog=1#linkbaud
+  // For the STM32F107 using USART2 with a clock frequency of 36MHz (Max) to obtain a baud rate of 115.2k need:
 
-      //BRR = fclk / (16 x Baud) = 36/(16 x 0.1152) =19.53 decimal
+  //BRR = fclk / (16 x Baud) = 36/(16 x 0.1152) =19.53 decimal
 
-      //DIV_Mantissa = 19 dec = 0x13
-      //DIV_Fraction = 0.53 dec = 16 x 0.53 = 8.48 ~ 8
+  //DIV_Mantissa = 19 dec = 0x13
+  //DIV_Fraction = 0.53 dec = 16 x 0.53 = 8.48 ~ 8
  
-      //USART_BRR = 0x138 
+  //USART_BRR = 0x138 
   //configure baud rate
   dynamic_access<USART::USARTRegisterType, USART::USARTRegisterType>::reg_or(USART::Usart::baudRateRegister, 0x683);
 
@@ -137,7 +139,7 @@ int USART::Usart::init()
   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
   NVIC_Init(&NVIC_InitStructure);
 
-    //reset status register
+  //reset status register
   dynamic_access<USART::USARTRegisterType, USART::USARTRegisterType>::reg_set(USART::Usart::statusRegister, USART::StatusRegister::RegisterReset);
 
 
@@ -160,10 +162,12 @@ void USART::Usart::handleInterrupts(int interruptType)
   USART::Usart::usartStatus = dynamic_access<USART::USARTRegisterType, USART::USARTRegisterType>::reg_get(statusRegister);
   if(usartStatus && USART::StatusRegister::RXNotEmpty){
 
-    //echo what we got
-    uint8_t data;
+    //Put Data into external TX Buffer
+    uint8_t data = 0;
     data = dynamic_access<USART::USARTRegisterType, uint8_t>::reg_get(dataRegister);
-    dynamic_access<USART::USARTRegisterType, uint8_t>::reg_or(dataRegister, data);
+    Usart::txBufPtr->put(data);
+    Usart::hasData = true;
+
 
   }
 //  if(usartStatus & USART::StatusRegister::TXEmpty){

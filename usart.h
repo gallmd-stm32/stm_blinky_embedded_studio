@@ -18,6 +18,7 @@
 #include "gpio.h"
 #include "gpio_config.h"
 #include "misc.h"
+#include "circular_buffer.h"
 
 extern interruptable * handlerPointers[sizeof(peripheralInterrupts)];
 
@@ -181,7 +182,7 @@ namespace USART{
 
     public:
 
-    Usart(USART::USARTRegisterType baseRegister);
+    Usart(USART::USARTRegisterType baseRegister, util::circular_buffer<uint8_t> * TxBufferPointer);
     void handleInterrupts(int interruptType);
     void sendBytes(uint8_t data);
 
@@ -204,6 +205,8 @@ namespace USART{
     GPIOxRegisterType TXGPIOBank;
     GPIOxRegisterType RXGPIOBank;
     AlternateFunctionType pinAF;
+    util::circular_buffer<uint8_t> * txBufPtr;
+    bool hasData;
 
     void registerInterrupt();
     int init();

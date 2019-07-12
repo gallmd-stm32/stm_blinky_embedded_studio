@@ -18,4 +18,5 @@ Output/stm_blinky_embedded_studio\ Debug/Obj/usart.o: \
  /home/matt/Development/code/st/embedded\ studio/stm_blinky_embedded_studio/rcc.h \
  /home/matt/Development/code/st/embedded\ studio/stm_blinky_embedded_studio/gpio.h \
  /home/matt/Development/code/st/embedded\ studio/stm_blinky_embedded_studio/gpio_config.h \
- /home/matt/Development/code/st/embedded\ studio/stm_blinky_embedded_studio/misc.h
+ /home/matt/Development/code/st/embedded\ studio/stm_blinky_embedded_studio/misc.h \
+ /home/matt/Development/code/st/embedded\ studio/stm_blinky_embedded_studio/circular_buffer.h
